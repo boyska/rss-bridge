@@ -1,13 +1,18 @@
 <?php
 require_once __DIR__ . '/lib/RssBridge.php';
 
-define('PHP_VERSION_REQUIRED', '5.6.0');
+include __DIR__ . '/config.defines.php';
+
+if(!defined('PHP_VERSION_REQUIRED'))
+    define('PHP_VERSION_REQUIRED', '5.6.0');
 
 // Specify directory for cached files (using FileCache)
-define('CACHE_DIR', '/var/cache/rss-bridge');
+if(!defined('CACHE_DIR'))
+    define('CACHE_DIR', __DIR__ . '/cache');
 
 // Specify path for whitelist file
-define('WHITELIST_FILE', __DIR__ . '/whitelist.txt');
+if(!defined('WHITELIST_FILE'))
+    define('WHITELIST_FILE', __DIR__ . '/whitelist.txt');
 
 Configuration::verifyInstallation();
 Configuration::loadConfiguration();
