@@ -236,3 +236,4 @@ config.ini.php
 
 #Builder
 .buildconfig
+config.defines.php
