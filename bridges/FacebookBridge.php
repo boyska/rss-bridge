@@ -165,6 +165,14 @@ class FacebookBridge extends BridgeAbstract {
 		return htmlspecialchars_decode($ogtitle->content, ENT_QUOTES);
 
 	}
+    private function uri_strip_args($uri) {
+        $clean = strtok($uri, '?');
+        if($clean === FALSE) {
+            return $uri;
+        } else {
+            return $clean;
+        }
+    }
 
 	private function extractGroupURI($post) {
 
@@ -175,7 +183,7 @@ class FacebookBridge extends BridgeAbstract {
 
 			// Find the one that is a permalink
 			if(strpos($anchor->href, 'permalink') !== false) {
-				return $anchor->href;
+				return $this->uri_strip_args($anchor->href);
 			}
 
 		}
@@ -539,7 +547,7 @@ EOD;
 						$uri = self::URI . $post->find('abbr')[0]->parent()->getAttribute('href');
 
 						//Build and add final item
-						$item['uri'] = htmlspecialchars_decode($uri);
+						$item['uri'] = $this->uri_strip_args(htmlspecialchars_decode($uri));
 						$item['content'] = htmlspecialchars_decode($content);
 						$item['title'] = $title;
 						$item['author'] = $author;
