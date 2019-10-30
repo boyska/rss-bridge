@@ -4,7 +4,7 @@ class RadioRaiBridge extends BridgeAbstract {
 	const MAINTAINER = 'boyska';
 	const NAME = 'Radio Rai';
 	const URI = 'https://www.raiplayradio.it';
-	const CACHE_TIMEOUT = 1; // 10min
+	const CACHE_TIMEOUT = 900; // 15min
 	const DESCRIPTION = 'Segui le trasmissioni radio rai con feed/podcast valido';
 	const PARAMETERS = array( array(
 		'txname' => array(
@@ -12,6 +12,20 @@ class RadioRaiBridge extends BridgeAbstract {
 			'required' => true
 		)
 	));
+
+    private function getFinalURL($url) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        $ret = curl_exec($ch);
+        if($ret === FALSE) {
+            return null;
+        }
+        $redirect = curl_getinfo($ch, CURLINFO_REDIRECT_URL);
+        if($redirect === false) return $url;
+        return $redirect;
+    }
 
 	public function collectData(){
 		$html = getSimpleHTMLDOM($this->getURI())
@@ -27,7 +41,7 @@ class RadioRaiBridge extends BridgeAbstract {
             $item['author'] = $this->getInput('txname');
             $item['title'] = $title;
             $item['content'] = $episode->plaintext;
-            $item['enclosures'] = [ $audiourl ];
+            $item['enclosures'] = [ $this::getFinalURL($audiourl) ];
             $item['url'] = $this::URI . $episode->getAttribute('data-href');
 
             $this->items[] = $item;
