@@ -42,7 +42,7 @@ class RadioRaiBridge extends BridgeAbstract {
             $item['title'] = $title;
             $item['content'] = $episode->plaintext;
             $item['enclosures'] = [ $this::getFinalURL($audiourl) ];
-            $item['url'] = $this::URI . $episode->getAttribute('data-href');
+            $item['uri'] = $this::URI . $episode->getAttribute('data-href');
 
             $this->items[] = $item;
 		}
