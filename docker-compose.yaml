@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+    php:
+        build:
+            context: .
+        volumes:
+            - ./:/app/public/
+        ports:
+            - "8001:80"
+
