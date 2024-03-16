@@ -18,7 +18,7 @@ class AtomFormat extends FormatAbstract{
 		$uri = !empty($extraInfos['uri']) ? $extraInfos['uri'] : 'https://github.com/RSS-Bridge/rss-bridge';
 
 		$uriparts = parse_url($uri);
-		$icon = $this->xml_encode($uriparts['scheme'] . '://' . $uriparts['host'] .'/favicon.ico');
+		$icon = $this->xml_encode('http' . $https . '://' . $httpHost .'/favicon.png');
 
 		$uri = $this->xml_encode($uri);
 
