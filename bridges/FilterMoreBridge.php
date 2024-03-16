@@ -86,7 +86,11 @@ class FilterMoreBridge extends FeedExpander
             ],
             'defaultValue' => 'asc',
         ],
-        'limit' => self::LIMIT,
+        'limit' => [
+            'name'          => 'Limit',
+            'type'          => 'number',
+            'title'         => 'Maximum number of items to return',
+        ],
 
         ]];
 
