@@ -96,7 +96,6 @@ class AutoPodcasterBridge extends FeedExpander {
         if(count($audios) === 0) {
             return null;
         }
-        $item['enclosures'] = array_values($audios);
         $item['enclosures'] = [];
         foreach(array_values($audios) as $audio) {
             $item['enclosures'][] = $audio['sources'][0];
